@@ -1,6 +1,6 @@
 # :card_file_box: :partying_face: folderstack
 
-Generate directory structure documentation in Markdown.
+Generate repository structure documentation in Markdown.
 
 ## Example
 
