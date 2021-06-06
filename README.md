@@ -42,11 +42,11 @@ folderstack
 
 *--outfile*
 
-Output file destination, default: "./folderstack.md".
+Output file destination. Default: "./folderstack.md".
 
 *--docspace*
 
-Spacing for custom documentation (the number of space characters), default: 50.
+Spacing for custom documentation (the number of space characters). Default: 50.
 
 ## Developers
 
