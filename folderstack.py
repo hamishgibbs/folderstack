@@ -1,4 +1,5 @@
 import os
+import click
 
 dir = "/Users/hamishgibbs/Documents/Covid-19/fb_population_paper/src/"
 
@@ -6,7 +7,24 @@ folder_end = "└── "
 folder = "├── "
 
 
-def format_file(name, last_items, recurstion_level, space = 3):
+@click.command()
+@click.option('--dir', default=os.getcwd(), help='root directory to document')
+@click.option('--outfile',
+              default=os.getcwd() + "/folderstack.md",
+              help='output Markdown file')
+@click.option('--docspace',
+              default=50,
+              help='space before documentation')
+def cli(dir, outfile, docspace):
+
+    out_lines = document_directory(dir, docspace)
+
+    with open(outfile, "w") as f:
+
+        f.writelines("\n".join(out_lines))
+
+
+def format_file(name, last_items, recursion_level, directory=False):
 
     if name in last_items:
 
@@ -16,32 +34,52 @@ def format_file(name, last_items, recurstion_level, space = 3):
 
         folder_symbol = folder
 
-    space = " " * space
-    return recursion_level * space + folder_symbol + name
+    if directory:
+        recursion_level = recursion_level - 1
+
+    space = "  " * recursion_level
+    return space + folder_symbol + name
 
 
-original_root_len = len(dir.split(os.sep)) - 1
+def document_directory(dir, docspace):
 
-last_root = ""
-last_items = []
-out_lines = []
+    original_root_len = len(dir.split(os.sep)) - 1
 
-for root, dirs, files in os.walk(dir):
-    path = root.split(os.sep)
-    if len(dirs) == 0:
-        last_items.append(files[-1])
-    else:
-        last_items.append(dirs[-1])
+    last_items = []
+    out_lines = []
 
-    recursion_level = len(path) - original_root_len
+    for root, dirs, files in os.walk(dir):
+        path = root.split(os.sep)
 
-    out_lines.append(format_file(os.path.basename(root), last_items, recursion_level, space = 3))
+        recursion_level = len(path) - original_root_len - 1
 
-    for i, file in enumerate(files):
-        out_lines.append(format_file(file, last_items, recursion_level, space = 6))
+        print(root, dirs, files)
+        print(recursion_level)
 
-out_lines = [x + " " * (50 - len(x))  + "#" for x in out_lines]
+        if len(dirs) != 0:
+            last_items.append(dirs[-1])
+        elif len(files) != 0:
+            last_items.append(files[-1])
+        else:
+            continue
 
-out_lines = ["```"] + out_lines + ["```"]
+        out_lines.append(
+            format_file(
+                name=os.path.basename(root),
+                last_items=last_items,
+                recursion_level=recursion_level,
+                directory=True))
 
-out_lines
+        for i, file in enumerate(files):
+            out_lines.append(
+                format_file(
+                    name=file,
+                    last_items=last_items,
+                    recursion_level=recursion_level,
+                    directory=False))
+
+    out_lines = [x + " " * (docspace - len(x)) + "#" for x in out_lines]
+
+    out_lines = ["```"] + out_lines + ["```"]
+
+    return out_lines
