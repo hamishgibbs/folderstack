@@ -1,4 +1,4 @@
-# folderstack
+# :open_file_folder: folderstack
 
 Generate directory structure documentation in Markdown.
 
