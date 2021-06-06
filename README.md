@@ -1,4 +1,4 @@
-# folderstack :card_file_box: :partying_face:
+# :card_file_box: :partying_face: folderstack
 
 Generate directory structure documentation in Markdown.
 
