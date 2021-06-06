@@ -14,7 +14,13 @@ Generate repository structure documentation in Markdown.
 
 ## Installation
 
-Install `folderstack` from GitHub:
+Install stable `folderstack` from GitHub:
+
+```{shell}
+pip install git+https://github.com/hamishgibbs/folderstack.git@stable
+```
+
+Install development `folderstack` from GitHub:
 
 ```{shell}
 pip install git+https://github.com/hamishgibbs/folderstack.git@main
