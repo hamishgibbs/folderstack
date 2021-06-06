@@ -35,7 +35,7 @@ def format_file(name, last_items, recursion_level, directory=False):
         folder_symbol = folder
 
     if directory:
-        recursion_level = recursion_level - 1
+        recursion_level = recursion_level
 
     space = "  " * recursion_level
     return space + folder_symbol + name
