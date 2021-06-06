@@ -53,9 +53,6 @@ def document_directory(dir, docspace):
 
         recursion_level = len(path) - original_root_len - 1
 
-        print(root, dirs, files)
-        print(recursion_level)
-
         if len(dirs) != 0:
             last_items.append(dirs[-1])
         elif len(files) != 0:
